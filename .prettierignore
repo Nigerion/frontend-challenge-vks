@@ -1,0 +1,26 @@
+
+# Собранные файлы
+dist/
+build/
+
+# Node_modules
+node_modules/
+
+# Логи
+*.log
+
+# Папки окружения
+.env
+.env.local
+.env.*.local
+
+# Vite кэш
+.vite/
+
+# Конфигурации, которые не нужно форматировать
+*.config.js
+*.config.cjs
+*.config.mjs
+
+# Git
+.git/

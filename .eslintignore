@@ -1,0 +1,26 @@
+
+#Сборка
+dist/
+build/
+
+# Node_modules
+node_modules/
+
+# Vite кэш
+.vite/
+
+# Конфиг Vite (ESLint сам работает по src)
+vite.config.js
+vite.config.ts
+
+# Конфиги
+*.config.js
+*.config.cjs
+*.config.mjs
+
+# Prettier конфиг
+.prettierrc.js
+.prettierrc.cjs
+
+# Git
+.git/
