@@ -2,6 +2,7 @@ import Grid from "../../components/grid/Grid";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { toggleFavorite } from "../../service/slice/catsSlice/catsSlice";
 import type { getListCats } from "../../types";
+import cl from "./likedPage.module.scss";
 
 export const LikedPage = () => {
   const dispatch = useAppDispatch();
@@ -12,9 +13,7 @@ export const LikedPage = () => {
   };
 
   if (liked.length === 0) {
-    return (
-      <div className="empty-state">Вы пока не добавили ни одного кота</div>
-    );
+    return <div className={cl.error}>Вы пока не добавили ни одного кота</div>;
   }
 
   return (
