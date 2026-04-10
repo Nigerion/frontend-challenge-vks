@@ -1,9 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import { catsApi } from "./slice/catsSlice/catsSlice";
+import { catsApi } from "./api/catsApi";
+import catsReducer from "./slice/catsSlice/catsSlice";
 
 export const store = configureStore({
-  reducer: { [catsApi.reducerPath]: catsApi.reducer },
+  reducer: { cats: catsReducer, [catsApi.reducerPath]: catsApi.reducer },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(catsApi.middleware),
 });

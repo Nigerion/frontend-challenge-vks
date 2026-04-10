@@ -39,9 +39,8 @@ export default [
       sourceType: "module",
       // Добавляет глобальные переменные браузера
       globals: {
-        ...globals.node,
         ...globals.browser,
-        ...globals.es2021
+        ...globals.es2021,
       }
     },
 
@@ -61,7 +60,7 @@ export default [
     rules: {
       // Рекомендованные правила JS.
       ...js.configs.recommended.rules,
-
+      "no-unused-vars": "off",
       // Рекомендованные TS‑правила.
       ...tseslint.configs.recommended[0].rules,
 

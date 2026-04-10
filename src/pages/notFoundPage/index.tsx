@@ -1,3 +1,9 @@
+import cl from "./notFoundPage.module.scss";
+
 export const NotFoundPage = () => {
-  return <>К сожадениею данной страницы не существует!</>;
+  return (
+    <div className={cl.wrapper}>
+      К сожадениею данной страницы не существует!
+    </div>
+  );
 };

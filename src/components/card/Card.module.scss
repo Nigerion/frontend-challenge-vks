@@ -1,0 +1,59 @@
+.card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    transform: scale(1.02);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+  }
+
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #e9e9ed;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    &.loaded {
+      opacity: 1;
+    }
+  }
+
+  .favoriteBtn {
+    position: absolute;
+    bottom: 15px;
+    right: 19px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: rgba(242, 78, 30, 1);
+
+    svg {
+      width: 48px;
+      height: 48px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2.2;
+    }
+
+    &.active svg {
+      fill: rgba(255, 58, 0, 1);
+      stroke: rgba(255, 58, 0, 1);
+    }
+
+    &:hover svg {
+      fill: rgba(242, 78, 30, 1);
+      stroke: rgba(242, 78, 30, 1);
+    }
+  }
+}

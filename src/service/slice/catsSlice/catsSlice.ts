@@ -1,62 +1,38 @@
-import { type BaseQueryFn, createApi } from "@reduxjs/toolkit/query/react";
-import type { AxiosError } from "axios";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-import type { getListCats } from "../../../types";
-import type {
-  AxiosBaseQueryArgs,
-  AxiosBaseQueryError,
-} from "../../../types/api";
-import { api } from "../../api";
+import type { CatsState, FavoriteCat } from "../../../types";
 
-const LIMIT = 20;
+const STORAGE_KEY = "cat-favorites";
 
-const axiosBaseQuery =
-  (): BaseQueryFn<AxiosBaseQueryArgs, unknown, AxiosBaseQueryError> =>
-  async ({ url, method, data, params, headers }) => {
-    try {
-      const result = await api({
-        url: url,
-        method,
-        data,
-        params,
-        headers,
-      });
-      return { data: result.data };
-    } catch (axiosError) {
-      const err = axiosError as AxiosError;
-      return {
-        error: {
-          status: err.response?.status,
-          data: err.response?.data || err.message,
-          message: err.message,
-        },
-      };
-    }
-  };
+const loadFavorites = (): FavoriteCat[] => {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    return saved ? JSON.parse(saved) : [];
+  } catch {
+    return [];
+  }
+};
 
-export const catsApi = createApi({
-  reducerPath: "catsApi",
-  baseQuery: axiosBaseQuery(),
-  endpoints: (build) => ({
-    getCats: build.infiniteQuery<getListCats[], void, number>({
-      infiniteQueryOptions: {
-        initialPageParam: 0,
-        getNextPageParam: (lastPage, allPages, lastPageParam) => {
-          if (lastPage.length === 0) return undefined;
-          return lastPageParam + 1;
-        },
-      },
-      query: () => ({
-        url: "/images/search",
-        method: "get",
-        params: {
-          limit: LIMIT,
-          page: 0,
-          order: "DESC",
-        },
-      }),
-    }),
-  }),
+const initialState: CatsState = {
+  liked: loadFavorites(),
+};
+
+const catsSlice = createSlice({
+  name: "cats",
+  initialState,
+  reducers: {
+    toggleFavorite: (state, action: PayloadAction<FavoriteCat>) => {
+      const cat = action.payload;
+      const index = state.liked.findIndex((f) => f.id === cat.id);
+      if (index === -1) {
+        state.liked.push(cat);
+      } else {
+        state.liked.splice(index, 1);
+      }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state.liked));
+    },
+  },
 });
 
-export const { useGetCatsInfiniteQuery } = catsApi;
+export const { toggleFavorite } = catsSlice.actions;
+export default catsSlice.reducer;
